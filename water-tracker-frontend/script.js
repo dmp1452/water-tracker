@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/api/water-intake';
+const API_BASE_URL = 'http://localhost:8000/api/water-intake';
 
 // Fetch and display all records
 const fetchRecords = async () => {
