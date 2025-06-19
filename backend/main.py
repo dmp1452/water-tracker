@@ -5,12 +5,15 @@ from psycopg2.pool import SimpleConnectionPool
 from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
-
+from pydantic import BaseModel
 # Load environment variables
 load_dotenv()
 
 # Initialize FastAPI
 app = FastAPI()
+
+class AmountInput(BaseModel):
+    amount: int
 
 app.add_middleware(
     CORSMiddleware,
@@ -46,7 +49,8 @@ def get_records():
         pool.putconn(conn)
 
 @app.post("/api/records")
-def add_record(amount: int):
+def add_record(data: AmountInput):
+    amount = data.amount
     if amount <= 0:
         raise HTTPException(status_code=400, detail="Invalid amount. Must be a positive number.")
     
@@ -54,7 +58,7 @@ def add_record(amount: int):
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
             cursor.execute(
-                "INSERT INTO water_tracker (amount) VALUES (%s) RETURNING *",
+                "INSERT INTO water_tracker (ounces) VALUES (%s) RETURNING *",
                 (amount,)
             )
             conn.commit()

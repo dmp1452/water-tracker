@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import { DisplayRecords } from './ShowRecords';
+import { AddRecords } from './AddRecords';
 const API_BASE_URL = 'http://localhost:8000/api/records'; // Backend URL
 
 function App() {
   console.log('React version at runtime:', React.version);
 
   const [records, setRecords] = useState([]); 
-  const [amount, setAmount] = useState(''); 
   
   const fetchRecords = async () => {
     try {
@@ -20,25 +20,23 @@ function App() {
     }
   };
 
-  /** 
-  const addRecord = async (e) => {
-    e.preventDefault();
-    if (amount > 0) {
-      try {
-        await fetch(API_BASE_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: parseInt(amount, 10) }),
-        });
-        setAmount('');
-        fetchRecords(); // Refresh the records list
-      } catch (error) {
-        console.error('Error adding record:', error);
+  const addRecords = async (amount) => {
+    try {
+      const response = await fetch(API_BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: parseInt(amount, 10) }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    } else {
-      alert('Please enter a valid amount.');
+      fetchRecords();
+    } catch (error) {
+      console.error('Error adding record:', error);
     }
-  };*/
+  }
 
  
   useEffect(() => {
@@ -54,6 +52,7 @@ function App() {
   return (
     <div>
      <DisplayRecords records={records} />
+     <AddRecords onAdd={addRecords}/>
     </div>
   );
 }
