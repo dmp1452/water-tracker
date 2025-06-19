@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  max-height: 500px;
   background-color:#5e88c6; 
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-
+  overflow-y: auto;
 `;
 
 const StyledDiv = styled.div`

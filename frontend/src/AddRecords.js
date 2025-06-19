@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 
+const StyledDiv = styled.div`
+
+  `
 export const AddRecords = ({ onAdd }) => {
   const [amount, setAmount] = useState("");
 
@@ -11,7 +14,7 @@ export const AddRecords = ({ onAdd }) => {
   };
 
   return (
-    <div>
+    <StyledDiv>
       <h2>Add Water Intake Record</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -23,6 +26,6 @@ export const AddRecords = ({ onAdd }) => {
         />
         <button type="submit">Add Record</button>
       </form>
-    </div>
+    </StyledDiv>
   );
 }

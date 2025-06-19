@@ -3,7 +3,14 @@ import styled from 'styled-components';
 import './App.css';
 import { DisplayRecords } from './ShowRecords';
 import { AddRecords } from './AddRecords';
-const API_BASE_URL = 'http://localhost:8000/api/records'; // Backend URL
+const API_BASE_URL = 'http://localhost:8000/api/records';
+
+const StyledDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
 
 function App() {
   console.log('React version at runtime:', React.version);
@@ -50,10 +57,10 @@ function App() {
 
 
   return (
-    <div>
+    <StyledDiv>
      <DisplayRecords records={records} />
      <AddRecords onAdd={addRecords}/>
-    </div>
+    </StyledDiv>
   );
 }
 
