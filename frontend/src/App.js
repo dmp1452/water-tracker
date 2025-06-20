@@ -8,7 +8,7 @@ const API_BASE_URL = 'http://localhost:8000/api/records';
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 `;
 

@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Water Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application for tracking daily water intake. Built with **FastAPI** (Python) for the backend, **PostgreSQL** for data storage, and **React** for the frontend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Add your daily water intake (in ounces or milliliters)
+- View all records, grouped by date
+- Responsive and modern UI with React and styled-components
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- **Backend:** FastAPI (Python)
+- **Database:** PostgreSQL
+- **Frontend:** React (JavaScript, styled-components)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Python 3.8+
+- Node.js & npm
+- PostgreSQL
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### Backend Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Install dependencies:**
+   ```bash
+   pip install fastapi uvicorn psycopg2 python-dotenv
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Configure environment variables:**
+   - Create a `.env` file in the `backend` folder:
+     ```
+     PGDATABASE=your_db_name
+     PGUSER=your_db_user
+     PGPASSWORD=your_db_password
+     PGHOST=localhost
+     PGPORT=5432
+     ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Create the database table:**
+   ```sql
+   CREATE TABLE water_tracker (
+     id SERIAL PRIMARY KEY,
+     date DATE NOT NULL DEFAULT CURRENT_DATE,
+     amount INTEGER NOT NULL
+   );
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Run the backend:**
+   ```bash
+   cd backend
+   uvicorn main:app --reload
+   ```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Frontend Setup
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Install dependencies:**
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-### Code Splitting
+2. **Start the frontend:**
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. The app will be available at [http://localhost:3000](http://localhost:3000).
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Running Both Servers
 
-### Making a Progressive Web App
+You can use the provided `start.bat` script (Windows) to launch both backend and frontend servers in separate terminals:
+```bat
+start.bat
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Enter your water intake and submit.
+- View your daily intake records, grouped by date.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Folder Structure
 
-### `npm run build` fails to minify
+```
+water-tracker/
+├── backend/
+│   ├── main.py
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── App.js
+│   │   └── ...
+│   └── package.json
+└── start.bat
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## License
+
+MIT License
+
+---
+
+## Author
+
