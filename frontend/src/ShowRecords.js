@@ -39,6 +39,28 @@ const isToday = (someDate) => {
   );
 };
 
+const grouped = (records) => {
+ const grouped = new Map();
+
+  records.forEach(record => {
+    const date = new Date(record.date_time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+
+    if (!grouped.has(year)) {
+    grouped.set(year, new Map());
+    }
+
+    const yearMap = grouped.get(year);
+
+    if (!yearMap.has(month)) {
+      yearMap.set(month, []);
+    }
+
+    yearMap.get(month).push(record);
+  });
+  return grouped
+}
 
 
 export const DisplayRecords = ({ records }) => {
