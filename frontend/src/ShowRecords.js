@@ -1,29 +1,63 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  max-height: 500px;
-  background-color:#5e88c6; 
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 100%
+  background-color: #f9f9f9; 
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
-`;
+  padding: 16px;
+  margin: 12px;
+`
+
+const StyledRecords = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  background-color: #eef2f5;
+`
 
 const StyledDiv = styled.div`
-  margin-bottom: 5px
-  border: 1px solid #ccc;
-  background-color:rgb(137, 180, 243);
-  border-radius: 4px;
-  padding: 8px;
-  `
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+`
+
+
+const isToday = (someDate) => {
+  const today = new Date();
+  return (
+    someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
+  );
+};
+
+
 
 export const DisplayRecords = ({ records }) => {
+  const today_records = records.filter(record => 
+  isToday(new Date(record.date_time))
+  )
+
+  const old_records = records.filter(record => 
+  !isToday(new Date(record.date_time))
+  )
+
   return (
+    <StyledRecords>
     <StyledContainer>
-      <h2>Water Intake Records</h2>
+      <h2>Past Records</h2>
       {records.length === 0 ? (
-        <p>No records found.</p>
+        <p>No past records found.</p>
       ) : (
-        records.map((record) => (
+        old_records.map((record) => (
           <StyledDiv key={record.id}>
             <p>Date: {new Date(record.date_time).toLocaleDateString()}</p>
             <p>Amount: {record.ounces} ml</p>
@@ -31,5 +65,20 @@ export const DisplayRecords = ({ records }) => {
         ))
       )}
     </StyledContainer>
-  );
+    <StyledContainer>
+      <h2>Today</h2>
+      {today_records.length ===0 ? (
+        <p>No records for today</p>
+      ):(
+        today_records.map((record) => (
+          <StyledDiv key={record.id}>
+            <p>Date: {new Date(record.date_time).toLocaleDateString()}</p>
+            <p>Amount: {record.ounces} ml</p>
+          </StyledDiv>
+        ))
+      )}
+      
+    </StyledContainer>
+    </StyledRecords>
+   );
 };
