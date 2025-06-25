@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { DropDown } from './DropDown';
+import React, { useState } from 'react';
 
 const StyledContainer = styled.div`
   max-height: 100%
@@ -62,8 +64,28 @@ const grouped = (records) => {
   return grouped
 }
 
+function YearMonthSelector({ years, months, selectedYear, selectedMonth, onYearChange, onMonthChange }) {
+  return (
+    <div>
+      <DropDown
+        label="Year"
+        options={years}
+        value={selectedYear}
+        onChange={onYearChange}
+      />
+      <DropDown
+        label="Month"
+        options={months}
+        value={selectedMonth}
+        onChange={onMonthChange}
+      />
+    </div>
+  );
+}
 
 export const DisplayRecords = ({ records }) => {
+  const [selected_month, set_selected_month] = useState([])
+  const [selected_year, set_selected_year] = useState([])
   const today_records = records.filter(record => 
   isToday(new Date(record.date_time))
   )
@@ -72,6 +94,8 @@ export const DisplayRecords = ({ records }) => {
   !isToday(new Date(record.date_time))
   )
 
+  const grouped_records = grouped(records)
+  selected_records=grouped_records[selected_year][selected_month]
   return (
     <StyledRecords>
     <StyledContainer>
