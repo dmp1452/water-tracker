@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export const DropDown = ({label, value, options, onSelect}) => {
+export const DropDown = ({label, value, options, onChange}) => {
     
     return (
         <label>

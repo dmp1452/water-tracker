@@ -64,7 +64,7 @@ const grouped = (records) => {
   return grouped
 }
 
-function YearMonthSelector({ years, months, selectedYear, selectedMonth, onYearChange, onMonthChange }) {
+const  YearMonthSelector= ({ years, months, selectedYear, selectedMonth, onYearChange, onMonthChange }) =>{
   return (
     <div>
       <DropDown
@@ -83,6 +83,14 @@ function YearMonthSelector({ years, months, selectedYear, selectedMonth, onYearC
   );
 }
 
+const onYearChange = (year)=>{
+  set_selected_year(year)
+}
+
+const onMonthChange =(month) => {
+  set_selected_month(month)
+}
+
 export const DisplayRecords = ({ records }) => {
   const [selected_month, set_selected_month] = useState([])
   const [selected_year, set_selected_year] = useState([])
@@ -98,7 +106,16 @@ export const DisplayRecords = ({ records }) => {
   selected_records=grouped_records[selected_year][selected_month]
   return (
     <StyledRecords>
+
     <StyledContainer>
+      <YearMonthSelector
+        years={grouped_records.keys}
+        months={grouped_records[selected_year].keys}
+        selectedMonth={selected_month}
+        selectedYear={selected_year}
+        onMonthChange={onMonthChange}
+        onYearChange={onYearChange}
+      />
       <h2>Past Records</h2>
       {records.length === 0 ? (
         <p>No past records found.</p>
@@ -111,6 +128,7 @@ export const DisplayRecords = ({ records }) => {
         ))
       )}
     </StyledContainer>
+
     <StyledContainer>
       <h2>Today</h2>
       {today_records.length ===0 ? (
