@@ -45,6 +45,22 @@ function App() {
     }
   }
 
+  const groupByYearMonth = (records) => {
+    const result = new Map();
+    records.forEach(record => {
+      const date = new Date(record.date_time);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+
+      if (!result.has(year)) result.set(year, new Map());
+      const monthsMap = result.get(year);
+
+      if (!monthsMap.has(month)) monthsMap.set(month, []);
+      monthsMap.get(month).push(record);
+    });
+   return result;
+  };
+
  
   useEffect(() => {
     fetchRecords();
@@ -58,7 +74,7 @@ function App() {
 
   return (
     <StyledDiv>
-     <DisplayRecords records={records} />
+     <DisplayRecords records={records} groupedRecords={groupByYearMonth(records)}/>
      <AddRecords onAdd={addRecords}/>
     </StyledDiv>
   );

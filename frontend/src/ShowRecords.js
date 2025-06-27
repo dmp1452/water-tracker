@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { DropDown } from './DropDown';
 import React, { useState, useMemo } from 'react';
-
+import { OuncesCalendar } from './OuncesCalendar';
+import Calendar from 'react-calendar';
 const StyledContainer = styled.div`
   max-height: 100%;
   background-color: #f9f9f9;
@@ -40,21 +41,7 @@ const isToday = (someDate) => {
   );
 };
 
-const groupByYearMonth = (records) => {
-  const result = new Map();
-  records.forEach(record => {
-    const date = new Date(record.date_time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
 
-    if (!result.has(year)) result.set(year, new Map());
-    const monthsMap = result.get(year);
-
-    if (!monthsMap.has(month)) monthsMap.set(month, []);
-    monthsMap.get(month).push(record);
-  });
-  return result;
-};
 
 const YearMonthSelector = ({ years, months, selectedYear, selectedMonth, onYearChange, onMonthChange }) => (
   <div>
@@ -73,24 +60,20 @@ const YearMonthSelector = ({ years, months, selectedYear, selectedMonth, onYearC
   </div>
 );
 
-export const DisplayRecords = ({ records }) => {
+export const DisplayRecords = ({ records, groupedRecords }) => {
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
 
   const todayRecords = useMemo(() => (
     records.filter(record => isToday(new Date(record.date_time)))
   ), [records]);
-  
-  const groupedRecords = useMemo(() => groupByYearMonth(records), [records]);
-  console.log(groupedRecords)
+
   const years = Array.from(groupedRecords.keys());
-  console.log(selectedYear)
-  console.log(groupedRecords.get(selectedYear))
   const months = selectedYear && groupedRecords.get(Number(selectedYear)) 
     ? Array.from(groupedRecords.get(Number(selectedYear)).keys()) 
     : [];
 
-  const selectedRecords = selectedYear && selectedMonth && groupedRecords.get(Number(selectedYear))?.get(Number(selectedMonth)) || [];
+  const selectedRecords = (selectedYear && selectedMonth && groupedRecords.get(Number(selectedYear))?.get(Number(selectedMonth))) || [];
 
   return (
     <StyledRecords>
@@ -129,6 +112,14 @@ export const DisplayRecords = ({ records }) => {
           ))
         )}
       </StyledContainer>
+      
+      {selectedYear && selectedMonth && selectedRecords.length > 0 && (
+        <OuncesCalendar
+          records={selectedRecords}
+          selectedYear={selectedYear}
+          selectedMonth={selectedMonth}
+        />
+      )}
     </StyledRecords>
   );
 };
