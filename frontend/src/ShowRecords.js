@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { DropDown } from './DropDown';
 import React, { useState, useMemo } from 'react';
 import { OuncesCalendar } from './OuncesCalendar';
-import Calendar from 'react-calendar';
+
 const StyledContainer = styled.div`
   max-height: 100%;
   background-color: #f9f9f9;
